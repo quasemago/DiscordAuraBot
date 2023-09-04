@@ -1,11 +1,11 @@
 global.bot_config = {
     BOT_ID: '',
     BOT_TOKEN: '',
-    BOT_OWNERS: []
+    BOT_OWNER: ''
 }
 
-const dotenv = require('dotenv');
-dotenv.config();
+import { config } from 'dotenv';
+config();
 
 // Parse .env file
 Object.keys(bot_config).forEach(key => {

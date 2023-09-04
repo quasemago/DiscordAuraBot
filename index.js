@@ -1,11 +1,9 @@
-global.fs = require('fs');
-
 // Export bot config.
-require('./src/data/BotConfig.js');
+import './src/data/BotConfig.js';
 
 // Export discord client interface.
-discordClient = require('./src/App.js');
-global.client = new discordClient();
+import { DiscordClient } from './src/App.js';
+global.client = new DiscordClient();
 
 // Start the bot.
 try {

@@ -1,9 +1,12 @@
-const { Client, Events, GatewayIntentBits, Partials, Collection, REST, Routes } = require('discord.js');
-const path = require('path');
+import { Client, Events, GatewayIntentBits, Partials, Collection, REST, Routes } from 'discord.js';
+import path from 'path';
+import fs from 'fs';
+import { getDirName } from "./helpers/utils.js";
+import os from 'os';
 
-global.DiscordJS = require('discord.js');
+const __dirname = getDirName(import.meta.url);
 
-class discordClient extends Client {
+export class DiscordClient extends Client {
     constructor() {
         super({
             // Load all discord intents.
@@ -45,7 +48,8 @@ class discordClient extends Client {
 
         for (const file of eventFiles) {
             const filePath = path.join(eventsPath, file);
-            const event = require(filePath);
+            const startPrefix = os.platform() === 'win32' ? 'file:///' : '';
+            const {default: event} = await import(startPrefix + filePath);
             if (event.once) {
                 client.once(event.name, (...args) => event.execute(...args));
             } else {
@@ -69,7 +73,8 @@ class discordClient extends Client {
             // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment.
             for (const file of commandFiles) {
                 const filePath = path.join(commandsPath, file);
-                const command = require(filePath);
+                const startPrefix = os.platform() === 'win32' ? 'file:///' : '';
+                const {default: command} = await import(startPrefix + filePath);
                 if ('data' in command && 'execute' in command) {
                     this.commandList.set(command.data.name, command);
                     commandListTemp.push(command.data.toJSON());
@@ -96,5 +101,3 @@ class discordClient extends Client {
         }
     }
 }
-
-module.exports = discordClient;
