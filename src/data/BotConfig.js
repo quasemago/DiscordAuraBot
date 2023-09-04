@@ -1,4 +1,5 @@
 global.bot_config = {
+    BOT_ID: '',
     BOT_TOKEN: '',
     BOT_OWNERS: []
 }
@@ -13,6 +14,7 @@ Object.keys(bot_config).forEach(key => {
 
 // Check for required fields.
 let required_fields = [
+    'BOT_ID',
     'BOT_TOKEN'
 ];
 
