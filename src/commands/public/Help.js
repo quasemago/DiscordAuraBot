@@ -15,10 +15,16 @@ export default {
         for (const cmd of commandList) {
             // Check if the user has permission to use the command.
             // Otherwise, don't show it in the list.
-            let hasPermission = await userHasPermission(interaction, cmd.data);
-            if (hasPermission) {
-                resultArray.push('> ``/' + cmd.data.name + '`` - ' + cmd.data.description + '\n');
-            }
+            await userHasPermission(interaction, cmd)
+                .then((value) => {
+                   if (value) {
+                       resultArray.push('> ``/' + cmd.data.name + '`` - ' + cmd.data.description + '\n');
+                   }
+                });
+        }
+
+        if (resultArray.length === 0) {
+            resultArray.push('> No commands available.');
         }
 
         await interaction.reply({ content: resultArray.join(''), ephemeral: true });

@@ -1,4 +1,5 @@
 import { Events } from 'discord.js';
+import { isBotOwner } from "../helpers/utils.js";
 
 export default {
     name: Events.InteractionCreate,
@@ -11,6 +12,11 @@ export default {
         const command = interaction.client.commandList.get(interaction.commandName);
         if (!command) {
             console.error(`No command matching ${interaction.commandName} was found.`);
+            return;
+        }
+
+        if (command.owner && !isBotOwner(interaction.user.id)) {
+            await interaction.reply({ content: 'You are not the bot owner!', ephemeral: true });
             return;
         }
 

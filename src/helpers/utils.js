@@ -5,16 +5,22 @@ export const isBotOwner = function (userid) {
     return userid === bot_config.BOT_OWNER;
 }
 
-export const userHasPermission = function (interaction, cmdData) {
+export const userHasPermission = function (interaction, cmd) {
     return new Promise((resolve) => {
-        // Check if is the bot owner.
-        if (isBotOwner(interaction.user.id)) {
+        let isOwner = isBotOwner(interaction.user.id);
+        if (isOwner) {
             resolve(true);
             return;
         }
 
+        // Check if is the bot owner, if applicable.
+        if (cmd.owner && !isOwner) {
+            resolve(false);
+            return;
+        }
+
         // Check if the command is a DM command.
-        if (cmdData.dm_permission) {
+        if (cmd.data.dm_permission) {
             resolve(true);
             return;
         }
@@ -25,7 +31,7 @@ export const userHasPermission = function (interaction, cmdData) {
             return;
         }
 
-        resolve(interaction.member.permissions.has(cmdData.default_member_permissions, true));
+        resolve(interaction.member.permissions.has(cmd.data.default_member_permissions, true));
     });
 }
 
