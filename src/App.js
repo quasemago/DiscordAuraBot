@@ -44,16 +44,17 @@ export class DiscordClient extends Client {
 
     async loadEvents() {
         const eventsPath = path.join(__dirname, 'events');
-        const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+        const eventFiles = fs.readdirSync(eventsPath)
+            .filter(file => file.endsWith('.js'));
 
         for (const file of eventFiles) {
             const filePath = path.join(eventsPath, file);
             const startPrefix = os.platform() === 'win32' ? 'file:///' : '';
             const {default: event} = await import(startPrefix + filePath);
             if (event.once) {
-                client.once(event.name, (...args) => event.execute(...args));
+                this.once(event.name, (...args) => event.execute(...args));
             } else {
-                client.on(event.name, (...args) => event.execute(...args));
+                this.on(event.name, (...args) => event.execute(...args));
             }
         }
     }
