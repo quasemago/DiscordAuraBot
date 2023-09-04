@@ -18,6 +18,7 @@ yarn-error.log*
 node_modules/
 jspm_packages/
 .npm
+package-lock.json
 
 ### DotEnv ###
 .env
