@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from 'discord.js';
-import { userHasPermission } from "../../helpers/utils.js";
+import {SlashCommandBuilder} from 'discord.js';
+import {userHasPermission} from "../../helpers/utils.js";
 
 const cmdData = new SlashCommandBuilder()
     .setName('help')
@@ -17,9 +17,9 @@ export default {
             // Otherwise, don't show it in the list.
             await userHasPermission(interaction, cmd)
                 .then((value) => {
-                   if (value) {
-                       resultArray.push('> ``/' + cmd.data.name + '`` - ' + cmd.data.description + '\n');
-                   }
+                    if (value) {
+                        resultArray.push('> ``/' + cmd.data.name + '`` - ' + cmd.data.description + '\n');
+                    }
                 });
         }
 
@@ -27,6 +27,6 @@ export default {
             resultArray.push('> No commands available.');
         }
 
-        await interaction.reply({ content: resultArray.join(''), ephemeral: true });
+        await interaction.reply({content: resultArray.join(''), ephemeral: true});
     }
 };

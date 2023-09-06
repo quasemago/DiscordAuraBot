@@ -39,3 +39,15 @@ export const getDirName = function (moduleUrl) {
     const filename = fileURLToPath(moduleUrl)
     return path.dirname(filename)
 }
+
+export const testDbConnection = async function(db) {
+    return new Promise(async (resolve, reject) => {
+        await db.authenticate()
+            .then(() => {
+                resolve(true);
+            })
+            .catch(err => {
+                reject(err);
+            });
+    });
+}

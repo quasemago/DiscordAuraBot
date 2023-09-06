@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import {SlashCommandBuilder} from 'discord.js';
 
 const cmdData = new SlashCommandBuilder()
     .setName('ping')
@@ -8,6 +8,6 @@ export default {
     data: cmdData,
     owner: false,
     async execute(interaction) {
-        await interaction.reply({ content: 'Pong!', ephemeral: true });
+        await interaction.reply({content: 'Pong!', ephemeral: true});
     }
 };
