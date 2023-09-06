@@ -1,5 +1,5 @@
 import path from 'path'
-import { fileURLToPath } from 'url'
+import {fileURLToPath} from 'url'
 
 export const isBotOwner = function (userid) {
     return userid === bot_config.BOT_OWNER;
@@ -40,7 +40,7 @@ export const getDirName = function (moduleUrl) {
     return path.dirname(filename)
 }
 
-export const testDbConnection = async function(db) {
+export const testDbConnection = async function (db) {
     return new Promise(async (resolve, reject) => {
         await db.authenticate()
             .then(() => {
