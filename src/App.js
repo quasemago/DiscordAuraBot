@@ -1,10 +1,11 @@
-import { Client, Events, GatewayIntentBits, Partials, Collection, REST, Routes } from 'discord.js';
+import {Client, Events, GatewayIntentBits, Partials, Collection, REST, Routes} from 'discord.js';
 import path from 'path';
 import fs from 'fs';
-import { getDirName } from "./helpers/utils.js";
-import os from 'os';
+import os from "os";
+import * as utils from "./helpers/utils.js";
+import "./data/DbConfig.js"
 
-const __dirname = getDirName(import.meta.url);
+const __dirname = utils.getDirName(import.meta.url);
 
 export class DiscordClient extends Client {
     constructor() {
@@ -30,32 +31,37 @@ export class DiscordClient extends Client {
         return super.login(token);
     }
 
-    async start () {
+    async start() {
         this.commandList = new Collection();
 
-        let status = await this.login(bot_config.BOT_TOKEN);
-        if (status) {
+        // Check for DB connection before starting.
+        await utils.testDbConnection(db_context).then(async () => {
+            console.log('Database connection established.');
+
+            // Load events and commands before logging.
             await this.loadEvents()
             await this.loadCommands();
-        } else {
-            throw new Error('Failed to login');
-        }
+
+            // Try logging into the discord gateway.
+            await this.login(bot_config.BOT_TOKEN).then(() => {
+                console.log(`Connection to discord gateway established!`);
+            }).catch(err => {
+                throw new Error(err);
+            });
+        }).catch(err => {
+            throw new Error(err);
+        });
     }
 
     async loadEvents() {
         const eventsPath = path.join(__dirname, 'events');
         const eventFiles = fs.readdirSync(eventsPath)
             .filter(file => file.endsWith('.js'));
+        const startPrefix = os.platform() === 'win32' ? 'file://' : '';
 
         for (const file of eventFiles) {
-            const filePath = path.join(eventsPath, file);
-            const startPrefix = os.platform() === 'win32' ? 'file:///' : '';
-            const {default: event} = await import(startPrefix + filePath);
-            if (event.once) {
-                this.once(event.name, (...args) => event.execute(...args));
-            } else {
-                this.on(event.name, (...args) => event.execute(...args));
-            }
+            let filePath = path.join(eventsPath, file);
+            import(startPrefix + filePath)
         }
     }
 
@@ -74,7 +80,7 @@ export class DiscordClient extends Client {
             // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment.
             for (const file of commandFiles) {
                 const filePath = path.join(commandsPath, file);
-                const startPrefix = os.platform() === 'win32' ? 'file:///' : '';
+                const startPrefix = os.platform() === 'win32' ? 'file://' : '';
                 const {default: command} = await import(startPrefix + filePath);
                 if ('data' in command && 'execute' in command) {
                     this.commandList.set(command.data.name, command);
@@ -92,7 +98,7 @@ export class DiscordClient extends Client {
             // The put method is used to fully refresh all commands in the guild with the current set.
             const data = await rest.put(
                 Routes.applicationCommands(bot_config.BOT_ID),
-                { body: commandListTemp },
+                {body: commandListTemp},
             );
 
             console.log(`Successfully reloaded ${data.length} application (/) commands.`);

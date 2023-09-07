@@ -9,7 +9,7 @@ global.client = new DiscordClient();
 try {
     client.start()
         .then(() => {
-            console.log('Bot started!');
+            console.log('Discord Bot started!');
         });
 } catch (e) {
     console.error(e);
