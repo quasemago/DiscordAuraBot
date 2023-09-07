@@ -2,8 +2,8 @@ import {SlashCommandBuilder} from 'discord.js';
 import {userHasPermission} from "../../helpers/utils.js";
 
 const cmdData = new SlashCommandBuilder()
-    .setName('help')
-    .setDescription('Get the list of bot commands!');
+    .setName('ajuda')
+    .setDescription('Lista os comandos do Bot!');
 
 export default {
     data: cmdData,
