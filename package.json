@@ -1,6 +1,6 @@
 {
   "name": "DiscordMaidBotJS",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Bot for discord",
   "type": "module",
   "main": "index.js",
