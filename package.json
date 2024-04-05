@@ -1,14 +1,21 @@
 {
-  "name": "DiscordMaidBotJS",
-  "version": "0.2.0",
-  "description": "Bot for discord",
+  "name": "DiscordUnematBot",
+  "version": "0.6.0",
+  "description": "Discord chatbot for UNEMAT",
   "type": "module",
   "main": "index.js",
+  "scripts": {
+    "stop": "pm2 delete discordunematbot",
+    "start": "pm2 start ./ecosystem.config.cjs",
+    "start:bot": "node --no-deprecation --unhandled-rejections=strict index.js"
+  },
   "dependencies": {
     "@devraelfreeze/discordjs-pagination": "^2.7.6",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
+    "mysql2": "^3.6.0",
+    "node-fetch": "^3.3.2",
     "sequelize": "^6.32.1",
-    "mysql2": "^3.6.0"
+    "winston": "^3.10.0"
   }
 }

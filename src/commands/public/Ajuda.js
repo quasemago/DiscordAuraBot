@@ -3,11 +3,13 @@ import {userHasPermission} from "../../helpers/utils.js";
 
 const cmdData = new SlashCommandBuilder()
     .setName('ajuda')
-    .setDescription('Lista os comandos do Bot!');
+    .setDescription('Lista os comandos do Bot!')
+    .setDMPermission(true);
 
 export default {
     data: cmdData,
     owner: false,
+    cooldown: 10,
     async execute(interaction) {
         const commandList = await JSON.parse(JSON.stringify(client.commandList));
 

@@ -14,8 +14,10 @@ Bibliotecas utilizadas:
 [![DiscordJS](https://img.shields.io/npm/v/discord.js?color=success&label=DiscordJS)](https://www.npmjs.com/package/discord.js)
 [![MySQL2](https://img.shields.io/npm/v/mysql2?color=success&label=MySQL2)](https://www.npmjs.com/package/mysql2)
 [![dotenv](https://img.shields.io/npm/v/dotenv?color=success&label=dotenv)](https://www.npmjs.com/package/dotenv)
-[![sequelize](https://img.shields.io/npm/v/sequelize?color=success&label=sequelize)](https://www.npmjs.com/package/cronstrue)
+[![sequelize](https://img.shields.io/npm/v/sequelize?color=success&label=sequelize)](https://www.npmjs.com/package/sequelize)
 [![@devraelfreeze/discordjs-pagination](https://img.shields.io/npm/v/@devraelfreeze/discordjs-pagination?color=success&label=DiscordJS%20Pagination)](https://www.npmjs.com/package/@devraelfreeze/discordjs-pagination)
+[![winston](https://img.shields.io/npm/v/winston?color=success&label=winston)](https://www.npmjs.com/package/winston)
+[![node-fetch](https://img.shields.io/npm/v/node-fetch?color=success&label=node-fetch)](https://www.npmjs.com/package/node-fetch)
 
 ## Instalação
 Para instalar o chatbot é necessário ter o [NodeJS](https://nodejs.org/) e o [NPM](https://www.npmjs.com/) (verifique as versões recomendadas [aqui](#dependências)) instalado na máquina.
