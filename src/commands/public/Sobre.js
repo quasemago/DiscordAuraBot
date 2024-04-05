@@ -1,26 +1,35 @@
-import {SlashCommandBuilder,EmbedBuilder} from 'discord.js';
-import {convertMsToHM} from "../../helpers/utils.js";
+import {SlashCommandBuilder, EmbedBuilder} from 'discord.js';
 
 const cmdData = new SlashCommandBuilder()
     .setName('sobre')
-    .setDescription('Informações sobre o Bot!');
+    .setDescription('Informações sobre o Bot!')
+    .setDMPermission(true);
 
 export default {
     data: cmdData,
     owner: false,
+    cooldown: 5,
     async execute(interaction) {
+        // Format uptime field.
+        const uptime = new Date(client.uptime).toISOString().substr(11, 8);
+
+        // Create embed.
         const sobreEmbed = new EmbedBuilder()
             .setColor(0x0099ff)
-            .setTitle(`🤖 ${client.user.displayName}: Sobre`)
-            .setDescription("Bot para servidor de discord...")
+            .setTitle(`🤖 ${client.user.displayName}`)
+            .setDescription(`Bot multifuncional focado em fornecer funcionalidades para consultas de informações públicas da UNEMAT.`)
             .addFields(
                 // TODO: Create a const with the values.
-                {name: 'Criado por', value: 'Bruno "quasemago" Ronning [(Github)](https://github.com/quasemago)', inline: false},
-                {name: 'Versão', value: '0.2.0', inline: true},
-                {name: 'Uptime', value: `${convertMsToHM(client.uptime)} horas`, inline: true},
+                {name: 'Desenvolvido por', value: `${botauthor} [(Github)](${authorgithub})`, inline: true},
+                {name: 'Versão', value: botversion, inline: true},
+                {name: 'Uptime', value: uptime, inline: true},
             ).setTimestamp()
             .setFooter({text: `🤖 BOT ID: ${client.user.id}`, iconURL: null})
 
-        await interaction.reply({embeds: [sobreEmbed], ephemeral: true});
+        // Send embed.
+        await interaction.reply({
+            embeds: [sobreEmbed],
+            ephemeral: false
+        });
     }
 };

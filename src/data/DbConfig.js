@@ -6,6 +6,7 @@ global.db_context = new Sequelize(
     bot_config.DATABASE_PASSWORD,
     {
         host: bot_config.DATABASE_HOST,
+        port: parseInt(bot_config.DATABASE_PORT),
         dialect: 'mysql',
     }
 );

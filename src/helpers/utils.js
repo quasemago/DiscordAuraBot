@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs';
 import {fileURLToPath} from 'url'
 
 export const isBotOwner = function (userid) {
@@ -6,7 +7,7 @@ export const isBotOwner = function (userid) {
 }
 
 export const userHasPermission = function (interaction, cmd) {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
         let isOwner = isBotOwner(interaction.user.id);
         if (isOwner) {
             resolve(true);
@@ -20,37 +21,32 @@ export const userHasPermission = function (interaction, cmd) {
         }
 
         // Check if the command is a DM command.
-        if (cmd.data.dm_permission) {
+        if (typeof cmd.data.dm_permission !== 'undefined' && cmd.data.dm_permission) {
             resolve(true);
             return;
         }
 
         // It is expected that this check is being done in a guild.
-        if (!interaction.guild || !interaction.member) {
+        if (typeof interaction.guild === 'undefined' || typeof interaction.member === 'undefined') {
             resolve(false);
             return;
         }
 
-        resolve(interaction.member.permissions.has(cmd.data.default_member_permissions, true));
+        // Check if the command has a required permission.
+        if (typeof cmd.data.default_member_permissions === 'undefined') {
+            resolve(true);
+            return;
+        }
+
+        // Check if the user has the required permission.
+        let result = await interaction.member.permissions.has(cmd.data.default_member_permissions, true);
+        resolve(result);
     });
 }
 
 export const getDirName = function (moduleUrl) {
     const filename = fileURLToPath(moduleUrl)
     return path.dirname(filename)
-}
-
-export const convertMsToHM = function (milliseconds) {
-    let seconds = Math.floor(milliseconds / 1000);
-    let minutes = Math.floor(seconds / 60);
-    let hours = Math.floor(minutes / 60);
-
-    seconds = seconds % 60;
-    minutes = seconds >= 30 ? minutes + 1 : minutes;
-    minutes = minutes % 60;
-    hours = hours % 24;
-
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 }
 
 export const testDbConnection = async function (db) {
@@ -63,4 +59,26 @@ export const testDbConnection = async function (db) {
                 reject(err);
             });
     });
+}
+
+export const sendPrivateMessageToOwner = async function (message) {
+    let owner = await client.users.fetch(bot_config.BOT_OWNER);
+    if (owner !== null) {
+        await owner.send(message);
+    }
+}
+
+export const mathRound = async function (num) {
+    return Math.round((num + Number.EPSILON) * 100) / 100
+}
+
+export function *getAllFilesFromDir(dir) {
+    const files = fs.readdirSync(dir, { withFileTypes: true });
+    for (const file of files) {
+        if (file.isDirectory()) {
+            yield* getAllFilesFromDir(path.join(dir, file.name));
+        } else {
+            yield path.join(dir, file.name);
+        }
+    }
 }

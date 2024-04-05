@@ -6,9 +6,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
         return;
     }
 
+    // Check if command exists.
     const command = interaction.client.commandList.get(interaction.commandName);
     if (!command) {
-        console.error(`No command matching ${interaction.commandName} was found.`);
+        bot_logger.error(`No command matching ${interaction.commandName} was found.`);
         return;
     }
 
@@ -17,19 +18,43 @@ client.on(Events.InteractionCreate, async (interaction) => {
         return;
     }
 
-    await command.execute(interaction)
-        .catch(async error => {
-            console.error(error);
-            if (interaction.replied || interaction.deferred) {
-                await interaction.followUp({
-                    content: 'There was an error while executing this command!',
-                    ephemeral: true
-                });
-            } else {
-                await interaction.reply({
-                    content: 'There was an error while executing this command!',
-                    ephemeral: true
-                });
-            }
-        });
+    // Check cmd cooldown to prevent spam.
+    const now = Date.now();
+    const timestamps = interaction.client.commandCooldowns.get(command.data.name);
+    const defaultCooldownDuration = 3;
+    const cooldownAmount = (command.cooldown ?? defaultCooldownDuration) * 1000;
+
+    if (timestamps.has(interaction.user.id)) {
+        const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
+
+        if (now < expirationTime) {
+            const expiredTimestamp = Math.round(expirationTime / 1000);
+            return interaction.reply({
+                content: `Aguarde, você poderá utilizar novamente esse comando: <t:${expiredTimestamp}:R>.`,
+                ephemeral: true
+            });
+        }
+    }
+
+    timestamps.set(interaction.user.id, now);
+    setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+
+    try {
+        // Execute command.
+        await command.execute(interaction);
+    } catch (err) {
+        bot_logger.error(err);
+
+        if (interaction.replied || interaction.deferred) {
+            await interaction.followUp({
+                content: 'There was an error while executing this command, report this to an administrator!',
+                ephemeral: false
+            });
+        } else {
+            await interaction.reply({
+                content: 'There was an error while executing this command, report this to an administrator!',
+                ephemeral: false
+            });
+        }
+    }
 });

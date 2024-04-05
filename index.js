@@ -1,11 +1,11 @@
-// Export bot config.
 import './src/data/BotConfig.js';
-
-// Export discord client interface.
-import { DiscordClient } from './src/App.js';
-global.client = new DiscordClient();
+import './src/helpers/constants.js';
+import './src/helpers/logger.js';
+import {DiscordClient} from './src/App.js';
 
 // Start the bot.
+global.client = new DiscordClient();
+
 try {
     client.start()
         .then(() => {

@@ -3,10 +3,16 @@ import {config} from 'dotenv';
 config();
 
 global.bot_config = {
+    // Discord BOT.
     BOT_ID: '',
     BOT_TOKEN: '',
     BOT_OWNER: '',
+    BOT_PRESENCE_TYPE: '',
+    BOT_PRESENCE_MSG: '',
+
+    // Bot Database.
     DATABASE_HOST: '',
+    DATABASE_PORT: '',
     DATABASE_USER: '',
     DATABASE_PASSWORD: '',
     DATABASE_DB: ''
@@ -22,6 +28,7 @@ let required_fields = [
     'BOT_ID',
     'BOT_TOKEN',
     'DATABASE_HOST',
+    'DATABASE_PORT',
     'DATABASE_USER',
     'DATABASE_PASSWORD',
     'DATABASE_DB'
