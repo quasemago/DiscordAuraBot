@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: "zragemaidbot",
+            name: "discordunematbot",
             instances: "1",
             exec_mode: "fork",
             script: "npm -- run \"start:bot\""
