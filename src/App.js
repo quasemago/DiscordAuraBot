@@ -2,7 +2,7 @@ import {Client, GatewayIntentBits, Partials, Collection, REST, Routes} from 'dis
 import path from 'path';
 import os from "os";
 import * as utils from "./helpers/utils.js";
-import "./data/DbConfig.js"
+import "./database/Database.js"
 
 const __dirname = utils.getDirName(import.meta.url);
 

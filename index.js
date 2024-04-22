@@ -1,4 +1,4 @@
-import './src/data/BotConfig.js';
+import './src/config/BotConfig.js';
 import './src/helpers/constants.js';
 import './src/helpers/logger.js';
 import {DiscordClient} from './src/App.js';
