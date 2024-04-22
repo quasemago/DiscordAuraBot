@@ -1,11 +1,11 @@
 {
-  "name": "DiscordUnematBot",
+  "name": "AuraDiscordBot",
   "version": "0.6.0",
   "description": "Discord chatbot for UNEMAT",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "stop": "pm2 delete discordunematbot",
+    "stop": "pm2 delete auradiscordbot",
     "start": "pm2 start ./ecosystem.config.cjs",
     "start:bot": "node --no-deprecation --unhandled-rejections=strict index.js"
   },
