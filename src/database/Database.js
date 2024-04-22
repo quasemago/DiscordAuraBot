@@ -3,14 +3,16 @@ import {Sequelize} from 'sequelize';
 import GuildServer from "./models/GuildServer.js";
 import ClassSchedule from "./models/ClassSchedule.js";
 import Scholarships from "./models/Scholarships.js";
+import Information from "./models/Information.js";
 import FAQ from "./models/FAQ.js";
 
 const models = [
     GuildServer,
     ClassSchedule,
     Scholarships,
+    Information,
     FAQ,
-]
+];
 
 global.db_context = new Sequelize(
     bot_config.DATABASE_DB,
