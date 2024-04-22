@@ -1,4 +1,11 @@
-import {Client, GatewayIntentBits, Partials, Collection, REST, Routes} from 'discord.js';
+import {
+    Client,
+    GatewayIntentBits,
+    Partials,
+    Collection,
+    REST,
+    Routes
+} from 'discord.js';
 import path from 'path';
 import os from "os";
 import * as utils from "./helpers/utils.js";
