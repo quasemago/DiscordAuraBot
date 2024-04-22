@@ -1,23 +1,25 @@
 import Sequelize, {Model} from "sequelize";
 
-export default class GuildServer extends Model {
+export default class FAQ extends Model {
     static init(sequelize) {
         super.init(
             {
-                // Model attributes.
                 id: {
                     type: Sequelize.INTEGER,
                     autoIncrement: true,
                     primaryKey: true,
                 },
-                guild_id: {
-                    type: Sequelize.BIGINT,
-                    unique: true,
+                question: {
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                },
+                answer: {
+                    type: Sequelize.STRING,
                     allowNull: false,
                 },
             }, {
                 sequelize,
-                tableName: "guild_servers",
+                tableName: "faq",
             });
         return this;
     }
