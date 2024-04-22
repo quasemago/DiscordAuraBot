@@ -38,6 +38,13 @@ export class DiscordClient extends Client {
         await utils.testDbConnection(db_context).then(async () => {
             bot_logger.info('Database connection established.');
 
+            // Sync db models before logging.
+            await db_context.sync().then(() => {
+                bot_logger.info('Database models synced.');
+            }).catch(err => {
+                bot_logger.fatal(err);
+            });
+
             // Load events and commands before logging.
             await this.loadEvents()
             await this.loadCommands();
