@@ -64,7 +64,10 @@ export const testDbConnection = async function (db) {
 export const sendPrivateMessageToOwner = async function (message) {
     let owner = await client.users.fetch(bot_config.BOT_OWNER);
     if (owner !== null) {
-        await owner.send(message);
+        await owner.send(message)
+            .catch(err => {
+                bot_logger.error(err);
+            });
     }
 }
 
