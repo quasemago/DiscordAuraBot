@@ -1,6 +1,7 @@
 import {
     ActionRowBuilder,
     ComponentType,
+    EmbedBuilder,
     SlashCommandBuilder,
     StringSelectMenuBuilder,
     StringSelectMenuOptionBuilder
@@ -44,7 +45,7 @@ export default {
                                     resultFaqList.map((faqItem, index) => {
                                         return new StringSelectMenuOptionBuilder()
                                             .setLabel(`${index + 1}. ${faqItem.title}`)
-                                            .setValue(`**${index + 1}. ${faqItem.title}**\n${faqItem.description}`);
+                                            .setValue(`**${index + 1}. ${faqItem.title}** ${faqItem.description}`);
                                     })
                                 );
 
@@ -58,16 +59,28 @@ export default {
 
                             const collector = replyFaq.createMessageComponentCollector({
                                 componentType: ComponentType.StringSelect,
-                                time: 60000,
+                                time: 45_000,
                                 filter: (i) => i.user.id === interaction.user.id && i.customId === interaction.id,
                             });
 
                             collector.on('collect', async (i) => {
                                 await i.update({
-                                    embeds: [{
-                                        title: i.values[1],
-                                        description: i.values[0]
-                                    }],
+                                    embeds: [
+                                        new EmbedBuilder()
+                                            .setTitle("FAQ (Perguntas Frequentes)")
+                                            .setDescription(i.values[0])
+                                            .setColor(0x0099ff)
+                                            .setTimestamp()
+                                            .setFooter({
+                                                text: `Requisitado por ${interaction.user.username}`,
+                                                iconURL: interaction.user.avatarURL()
+                                            })
+                                    ],
+                                });
+                            });
+                            collector.on('end', async () => {
+                                await replyFaq.edit({
+                                    components: []
                                 });
                             });
                         }
