@@ -21,12 +21,17 @@ export default {
     async execute(interaction) {
         await testDbConnection(db_context)
             .then(async () => {
-                await FAQ.findAll()
+                await FAQ.findAll({
+                    order: [
+                        ['frequency', 'DESC']
+                    ]
+                })
                     .then(async (faqs) => {
                         let resultFaqList = [];
 
                         for (const faqItem of faqs) {
                             resultFaqList.push({
+                                id: faqItem.id,
                                 title: faqItem.question,
                                 description: faqItem.answer
                             });
@@ -45,7 +50,7 @@ export default {
                                     resultFaqList.map((faqItem, index) => {
                                         return new StringSelectMenuOptionBuilder()
                                             .setLabel(`${index + 1}. ${faqItem.title}`)
-                                            .setValue(`**${index + 1}. ${faqItem.title}** ${faqItem.description}`);
+                                            .setValue(`${faqItem.id};**${faqItem.title}**;${faqItem.description}`);
                                     })
                                 );
 
@@ -64,11 +69,16 @@ export default {
                             });
 
                             collector.on('collect', async (i) => {
+                                const faqData = i.values[0].split(';');
+                                const faqId = faqData[0];
+                                const faqTitle = faqData[1];
+                                const faqDescription = faqData[2];
+
                                 await i.update({
                                     embeds: [
                                         new EmbedBuilder()
-                                            .setTitle("FAQ (Perguntas Frequentes)")
-                                            .setDescription(i.values[0])
+                                            .setTitle("FAQ: " + faqTitle)
+                                            .setDescription(faqDescription)
                                             .setColor(0x0099ff)
                                             .setTimestamp()
                                             .setFooter({
@@ -77,6 +87,8 @@ export default {
                                             })
                                     ],
                                 });
+                                
+                                await FAQ.increment('frequency', {by: 1, where: {id: faqId}});
                             });
                             collector.on('end', async () => {
                                 await replyFaq.edit({
