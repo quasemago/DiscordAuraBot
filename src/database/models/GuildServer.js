@@ -17,6 +17,7 @@ export default class GuildServer extends Model {
                 },
             }, {
                 sequelize,
+                tableName: "guild_servers",
             });
         return this;
     }
