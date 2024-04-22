@@ -17,6 +17,10 @@ export default class FAQ extends Model {
                     type: Sequelize.STRING,
                     allowNull: false,
                 },
+                frequency: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false,
+                },
             }, {
                 sequelize,
                 tableName: "faq",
