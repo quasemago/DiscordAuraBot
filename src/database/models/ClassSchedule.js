@@ -18,6 +18,10 @@ export default class ClassSchedule extends Model {
                     type: Sequelize.STRING,
                     allowNull: false,
                 },
+                semester: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false,
+                },
                 subject: {
                     type: Sequelize.STRING,
                     allowNull: false,
