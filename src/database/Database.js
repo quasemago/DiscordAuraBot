@@ -21,7 +21,11 @@ global.db_context = new Sequelize(
     {
         dialect: 'mysql',
         host: bot_config.DATABASE_HOST,
-        port: parseInt(bot_config.DATABASE_PORT)
+        port: parseInt(bot_config.DATABASE_PORT),
+        timezone: '-04:00',
+        dialectOptions: {
+            useUTC: false
+        }
     }
 );
 
