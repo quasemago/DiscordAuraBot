@@ -18,6 +18,8 @@ Bibliotecas utilizadas:
 [![@devraelfreeze/discordjs-pagination](https://img.shields.io/npm/v/@devraelfreeze/discordjs-pagination?color=success&label=DiscordJS%20Pagination)](https://www.npmjs.com/package/@devraelfreeze/discordjs-pagination)
 [![winston](https://img.shields.io/npm/v/winston?color=success&label=winston)](https://www.npmjs.com/package/winston)
 [![node-fetch](https://img.shields.io/npm/v/node-fetch?color=success&label=node-fetch)](https://www.npmjs.com/package/node-fetch)
+[![canvas](https://img.shields.io/npm/v/canvas?color=success&label=canvas)](https://www.npmjs.com/package/canvas)
+[![luxon](https://img.shields.io/npm/v/luxon?color=success&label=luxon)](https://www.npmjs.com/package/luxon)
 
 ## Instalação
 Para instalar o chatbot é necessário ter o [NodeJS](https://nodejs.org/) e o [NPM](https://www.npmjs.com/) (verifique as versões recomendadas [aqui](#dependências)) instalado na máquina.
