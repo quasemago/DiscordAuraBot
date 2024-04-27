@@ -1,6 +1,7 @@
 import {Sequelize} from 'sequelize';
 
 import GuildServer from "./models/GuildServer.js";
+import ClassPeriod from "./models/ClassPeriod.js";
 import ClassSchedule from "./models/ClassSchedule.js";
 import Scholarships from "./models/Scholarships.js";
 import Information from "./models/Information.js";
@@ -8,6 +9,7 @@ import FAQ from "./models/FAQ.js";
 
 const models = [
     GuildServer,
+    ClassPeriod,
     ClassSchedule,
     Scholarships,
     Information,
@@ -21,7 +23,11 @@ global.db_context = new Sequelize(
     {
         dialect: 'mysql',
         host: bot_config.DATABASE_HOST,
-        port: parseInt(bot_config.DATABASE_PORT)
+        port: parseInt(bot_config.DATABASE_PORT),
+        timezone: '-04:00',
+        dialectOptions: {
+            useUTC: false
+        }
     }
 );
 
