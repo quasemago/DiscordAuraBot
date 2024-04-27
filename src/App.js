@@ -22,6 +22,7 @@ export class DiscordClient extends Client {
                 GatewayIntentBits.GuildMessages,
                 GatewayIntentBits.MessageContent,
                 GatewayIntentBits.GuildMembers,
+                GatewayIntentBits.DirectMessages,
                 GatewayIntentBits.DirectMessageReactions,
                 GatewayIntentBits.GuildMessageReactions
             ],
