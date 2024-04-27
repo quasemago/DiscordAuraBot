@@ -15,7 +15,7 @@ import {Op} from "sequelize";
 
 const cmdData = new SlashCommandBuilder()
     .setName('hora')
-    .setDescription('Horário das aulas.')
+    .setDescription('Visualiza a grade de horários para a semana atual de um determinado semestre.')
     .setDMPermission(true);
 
 const getDayOfWeek = (dateString) => {
@@ -24,9 +24,9 @@ const getDayOfWeek = (dateString) => {
         .replace(/\.$/, '');
 }
 
-const createScheduleImage = (scheduleData) => {
-    const width = 640; // ajustar conforme necessário
-    const height = 420; // ajustar conforme necessário
+const createScheduleImage = (scheduleData, schedulePeriod) => {
+    const width = 640;
+    const height = 420;
     const headerHeight = 30;
     const canvas = createCanvas(width, height);
     const context = canvas.getContext('2d');
@@ -41,7 +41,7 @@ const createScheduleImage = (scheduleData) => {
     context.fillStyle = '#333';
     context.fillRect(0, 0, width, headerHeight);
     context.fillStyle = '#fff';
-    context.fillText('Horário das Aulas', width / 2, headerHeight / 2);
+    context.fillText('Horário das Aulas: ' + schedulePeriod, width / 2, headerHeight / 2);
 
     // Days of week header.
     const daysOfWeek = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB', 'DOM'];
@@ -125,12 +125,14 @@ export default {
 
                             periodColector.on('collect', async (i) => {
                                 const selectedPeriod = parseInt(i.values[0]);
+                                const periodStartOfWeek = now.startOf('week').toJSDate();
+                                const periodEndOfWeek = now.endOf('week', {useLocaleWeeks: false}).toJSDate();
                                 const resultLessonsList = await ClassSchedule.findAll({
                                     where: {
                                         period_id: selectedPeriod,
                                         date: {
-                                            [Op.gte]: now.startOf('week').toJSDate(),
-                                            [Op.lt]: now.endOf('week').toJSDate()
+                                            [Op.gte]: periodStartOfWeek,
+                                            [Op.lt]: periodEndOfWeek
                                         }
                                     }
                                 });
@@ -180,7 +182,9 @@ export default {
                                         return;
                                     }
 
-                                    const canvasBuffer = createScheduleImage(semesterLessons);
+                                    // Pega apenas o dia e mês do periodo
+                                    const schedulePeriod = `${periodStartOfWeek.getDate()}/${periodStartOfWeek.getMonth() + 1} - ${periodEndOfWeek.getDate()}/${periodEndOfWeek.getMonth() + 1}`;
+                                    const canvasBuffer = createScheduleImage(semesterLessons, schedulePeriod);
                                     let lessonLegend = '';
                                     let lessonTeachers = '';
 
@@ -193,6 +197,7 @@ export default {
                                         content: 'Aqui estão os horários da semana para o semestre e período selecionado:',
                                         embeds: [
                                             new EmbedBuilder()
+                                                .setDescription("Caso queira visualizar a grade de horário detalhadamente, acesse: **https://bit.ly/HorarioSI2024-1**.")
                                                 .addFields(
                                                     {
                                                         name: 'Legenda',
@@ -215,7 +220,7 @@ export default {
 
                                 semesterCollector.on('end', async () => {
                                     await newReply.edit({
-                                        content: 'Tempo esgotado para selecionar um período letivo.',
+                                        content: 'Tempo esgotado para selecionar um semestre.',
                                         components: []
                                     });
                                 });
