@@ -24,7 +24,7 @@ export default class Information extends Model {
                 }
             }, {
                 sequelize,
-                modelName: "information",
+                tableName: "information",
             }
         );
     }
