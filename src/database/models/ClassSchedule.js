@@ -10,6 +10,10 @@ export default class ClassSchedule extends Model {
                     autoIncrement: true,
                     primaryKey: true,
                 },
+                code: {
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                },
                 date: {
                     type: Sequelize.DATEONLY,
                     allowNull: false,
@@ -39,5 +43,11 @@ export default class ClassSchedule extends Model {
                 tableName: "class_schedule",
             });
         return this;
+    }
+
+    static associate(models) {
+        this.belongsTo(models.ClassPeriod, {
+            foreignKey: 'period_id'
+        });
     }
 }
