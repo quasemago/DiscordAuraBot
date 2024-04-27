@@ -87,11 +87,15 @@ export default {
                                             })
                                     ],
                                 });
-                                
-                                await FAQ.increment('frequency', {by: 1, where: {id: faqId}});
+
+                                await FAQ.increment('frequency', {
+                                    by: 1,
+                                    where: {id: faqId}
+                                });
                             });
                             collector.on('end', async () => {
                                 await replyFaq.edit({
+                                    content: ' ',
                                     components: []
                                 });
                             });

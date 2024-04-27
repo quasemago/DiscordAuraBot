@@ -182,7 +182,6 @@ export default {
                                         return;
                                     }
 
-                                    // Pega apenas o dia e mês do periodo
                                     const schedulePeriod = `${periodStartOfWeek.getDate()}/${periodStartOfWeek.getMonth() + 1} - ${periodEndOfWeek.getDate()}/${periodEndOfWeek.getMonth() + 1}`;
                                     const canvasBuffer = createScheduleImage(semesterLessons, schedulePeriod);
                                     let lessonLegend = '';
@@ -220,14 +219,14 @@ export default {
 
                                 semesterCollector.on('end', async () => {
                                     await newReply.edit({
-                                        content: 'Tempo esgotado para selecionar um semestre.',
+                                        content: ' ',
                                         components: []
                                     });
                                 });
                             })
                             periodColector.on('end', async () => {
                                 await reply.edit({
-                                    content: 'Tempo esgotado para selecionar um período letivo.',
+                                    content: ' ',
                                     components: []
                                 });
                             });
