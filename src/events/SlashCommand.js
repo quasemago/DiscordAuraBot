@@ -7,7 +7,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
 
     // Check if command exists.
-    const command = interaction.client.commands.get(interaction.commandName);
+    const command = client.commands.get(interaction.commandName);
     if (!command) {
         bot_logger.error(`No command matching ${interaction.commandName} was found.`);
         return;
@@ -20,7 +20,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
     // Check cmd cooldown to prevent spam.
     const now = Date.now();
-    const timestamps = interaction.client.commandCooldowns.get(command.data.name);
+    const timestamps = client.commandCooldowns.get(command.data.name);
     const defaultCooldownDuration = 3;
     const cooldownAmount = (command.cooldown ?? defaultCooldownDuration) * 1000;
 
