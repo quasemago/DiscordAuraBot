@@ -26,7 +26,7 @@ global.db_context = new Sequelize(
         port: parseInt(bot_config.DATABASE_PORT),
         timezone: '-04:00',
         dialectOptions: {
-            useUTC: false
+            charset: 'utf8',
         }
     }
 );
