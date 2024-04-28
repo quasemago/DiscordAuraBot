@@ -18,6 +18,7 @@ export default {
     data: cmdData,
     owner: false,
     cooldown: 10,
+    category: 'unemat',
     async execute(interaction) {
         await testDbConnection(db_context)
             .then(async () => {

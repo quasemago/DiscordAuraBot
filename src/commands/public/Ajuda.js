@@ -9,11 +9,13 @@ export default {
     data: cmdData,
     owner: false,
     cooldown: 10,
+    category: 'geral',
     async execute(interaction) {
         const uptime = new Date(client.uptime).toISOString().substr(11, 8);
         const embed = new EmbedBuilder()
             .setTitle(`🤖 ${client.user.displayName}`)
-            .setDescription("Olá, tudo bem? Sou um bot multifuncional focado em fornecer funcionalidades para consultas de informações públicas da UNEMAT." +
+            .setThumbnail(client.user.avatarURL())
+            .setDescription("Olá <@"+interaction.user.id+">, tudo bem? Sou um bot multifuncional focado em fornecer funcionalidades para consultas de informações públicas da UNEMAT." +
                 "\n\nDigite ``/comandos`` para visualizar toda a minha lista de comandos disponíveis.")
             .setColor(0x0099ff)
             .setTimestamp()

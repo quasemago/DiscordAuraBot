@@ -85,6 +85,7 @@ export default {
     data: cmdData,
     owner: false,
     cooldown: 10,
+    category: 'unemat',
     async execute(interaction) {
         const now = DateTime.now().setZone('America/Cuiaba');
         await testDbConnection(db_context)
