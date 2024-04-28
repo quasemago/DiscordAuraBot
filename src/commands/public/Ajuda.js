@@ -1,9 +1,8 @@
-import {SlashCommandBuilder} from 'discord.js';
-import {userHasPermission} from "../../helpers/utils.js";
+import {EmbedBuilder, SlashCommandBuilder} from 'discord.js';
 
 const cmdData = new SlashCommandBuilder()
     .setName('ajuda')
-    .setDescription('Lista os comandos do Bot!')
+    .setDescription('Comando de ajuda, com informações sobre o bot.')
     .setDMPermission(true);
 
 export default {
@@ -11,24 +10,27 @@ export default {
     owner: false,
     cooldown: 10,
     async execute(interaction) {
-        const commandList = await JSON.parse(JSON.stringify(client.commandList));
+        const uptime = new Date(client.uptime).toISOString().substr(11, 8);
+        const embed = new EmbedBuilder()
+            .setTitle(`🤖 ${client.user.displayName}`)
+            .setDescription("Olá, tudo bem? Sou um bot multifuncional focado em fornecer funcionalidades para consultas de informações públicas da UNEMAT." +
+                "\n\nDigite ``/comandos`` para visualizar toda a minha lista de comandos disponíveis.")
+            .setColor(0x0099ff)
+            .setTimestamp()
+            .addFields(
+                // TODO: Create a const with the values.
+                {name: 'Desenvolvido por', value: `${botauthor} [(Github)](${authorgithub})`, inline: true},
+                {name: 'Versão', value: botversion, inline: true},
+                {name: 'Uptime', value: uptime, inline: true},
+            )
+            .setFooter({
+                text: `Requisitado por ${interaction.user.username}`,
+                iconURL: interaction.user.avatarURL()
+            })
 
-        let resultArray = [];
-        for (const cmd of commandList) {
-            // Check if the user has permission to use the command.
-            // Otherwise, don't show it in the list.
-            await userHasPermission(interaction, cmd)
-                .then((value) => {
-                    if (value) {
-                        resultArray.push('> ``/' + cmd.data.name + '`` - ' + cmd.data.description + '\n');
-                    }
-                });
-        }
-
-        if (resultArray.length === 0) {
-            resultArray.push('> No commands available.');
-        }
-
-        await interaction.reply({content: resultArray.join(''), ephemeral: true});
+        await interaction.reply({
+            embeds: [embed],
+            ephemeral: false
+        })
     }
 };
