@@ -33,11 +33,7 @@ export default class ClassSchedule extends Model {
                 teacher: {
                     type: Sequelize.STRING,
                     allowNull: false,
-                },
-                room: {
-                    type: Sequelize.STRING,
-                    allowNull: false,
-                },
+                }
             }, {
                 sequelize,
                 tableName: "class_schedule",

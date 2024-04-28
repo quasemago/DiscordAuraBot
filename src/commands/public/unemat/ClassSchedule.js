@@ -14,7 +14,7 @@ import ClassSchedule from "../../../database/models/ClassSchedule.js";
 import {Op} from "sequelize";
 
 const cmdData = new SlashCommandBuilder()
-    .setName('hora')
+    .setName('horario')
     .setDescription('Visualiza a grade de horários para a semana atual de um determinado semestre.')
     .setDMPermission(true);
 
