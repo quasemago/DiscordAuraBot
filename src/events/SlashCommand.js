@@ -7,7 +7,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
 
     // Check if command exists.
-    const command = interaction.client.commandList.get(interaction.commandName);
+    const command = interaction.client.commands.get(interaction.commandName);
     if (!command) {
         bot_logger.error(`No command matching ${interaction.commandName} was found.`);
         return;

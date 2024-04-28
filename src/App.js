@@ -39,7 +39,7 @@ export class DiscordClient extends Client {
     }
 
     async start() {
-        this.commandList = new Collection();
+        this.commands = new Collection();
         this.commandCooldowns = new Collection();
 
         // Check for DB connection before starting.
@@ -93,7 +93,7 @@ export class DiscordClient extends Client {
             if ('data' in command && 'execute' in command) {
                 commandListGlobalTemp.push(command.data.toJSON());
 
-                this.commandList.set(command.data.name, command);
+                this.commands.set(command.data.name, command);
                 this.commandCooldowns.set(command.data.name, new Collection());
                 bot_logger.debug(`Loaded command ${command.data.name}`)
             } else {
