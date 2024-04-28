@@ -197,6 +197,7 @@ export default {
                                         embeds: [
                                             new EmbedBuilder()
                                                 .setDescription("Caso queira visualizar a grade de horário detalhadamente, acesse: **https://bit.ly/HorarioSI2024-1**.")
+                                                .setColor(0x0099ff)
                                                 .addFields(
                                                     {
                                                         name: 'Legenda',
@@ -208,6 +209,11 @@ export default {
                                                         inline: true
                                                     }
                                                 )
+                                                .setTimestamp()
+                                                .setFooter({
+                                                    text: `Requisitado por ${interaction.user.username}`,
+                                                    iconURL: interaction.user.avatarURL()
+                                                })
                                         ],
                                         files: [{
                                             attachment: canvasBuffer,
