@@ -1,8 +1,15 @@
-import {Client, GatewayIntentBits, Partials, Collection, REST, Routes} from 'discord.js';
+import {
+    Client,
+    GatewayIntentBits,
+    Partials,
+    Collection,
+    REST,
+    Routes
+} from 'discord.js';
 import path from 'path';
 import os from "os";
 import * as utils from "./helpers/utils.js";
-import "./data/DbConfig.js"
+import "./database/Database.js"
 
 const __dirname = utils.getDirName(import.meta.url);
 
@@ -15,6 +22,7 @@ export class DiscordClient extends Client {
                 GatewayIntentBits.GuildMessages,
                 GatewayIntentBits.MessageContent,
                 GatewayIntentBits.GuildMembers,
+                GatewayIntentBits.DirectMessages,
                 GatewayIntentBits.DirectMessageReactions,
                 GatewayIntentBits.GuildMessageReactions
             ],
@@ -31,12 +39,19 @@ export class DiscordClient extends Client {
     }
 
     async start() {
-        this.commandList = new Collection();
+        this.commands = new Collection();
         this.commandCooldowns = new Collection();
 
         // Check for DB connection before starting.
         await utils.testDbConnection(db_context).then(async () => {
             bot_logger.info('Database connection established.');
+
+            // Sync db models before logging.
+            await db_context.sync().then(() => {
+                bot_logger.info('Database models synced.');
+            }).catch(err => {
+                bot_logger.fatal(err);
+            });
 
             // Load events and commands before logging.
             await this.loadEvents()
@@ -78,7 +93,7 @@ export class DiscordClient extends Client {
             if ('data' in command && 'execute' in command) {
                 commandListGlobalTemp.push(command.data.toJSON());
 
-                this.commandList.set(command.data.name, command);
+                this.commands.set(command.data.name, command);
                 this.commandCooldowns.set(command.data.name, new Collection());
                 bot_logger.debug(`Loaded command ${command.data.name}`)
             } else {

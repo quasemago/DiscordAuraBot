@@ -1,6 +1,6 @@
 import {Events} from 'discord.js';
 import {sendPrivateMessageToOwner, testDbConnection} from "../helpers/utils.js";
-import {guildServer} from '../data/models/GuildServer.js';
+import GuildServer from '../database/models/GuildServer.js';
 
 client.on(Events.GuildDelete, async (guild) => {
     bot_logger.debug(`Left guild ${guild.name}!`);
@@ -10,7 +10,7 @@ client.on(Events.GuildDelete, async (guild) => {
         await testDbConnection(db_context)
             .then(async () => {
                 // Delete guild server entry from database.
-                await guildServer.destroy({where: {guild_id: guild.id}}).then(() => {
+                await GuildServer.destroy({where: {guild_id: guild.id}}).then(() => {
                     bot_logger.debug(`Deleted guild ${guild.name} from database.`);
                 });
             });
