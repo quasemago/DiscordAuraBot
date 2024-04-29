@@ -10,6 +10,10 @@ export default class Scholarships extends Model {
                     autoIncrement: true,
                     primaryKey: true,
                 },
+                code: {
+                    type: Sequelize.STRING,
+                    allowNull: false,
+                },
                 title: {
                     type: Sequelize.STRING,
                     allowNull: false,
