@@ -7,25 +7,33 @@ export default class Information extends Model {
                 // Model attributes.
                 id: {
                     type: Sequelize.INTEGER,
-                    primaryKey: true,
                     autoIncrement: true,
+                    primaryKey: true,
                 },
                 title: {
                     type: Sequelize.STRING,
                     allowNull: false,
                 },
-                description: {
-                    type: Sequelize.TEXT,
+                publication_date: {
+                    type: Sequelize.DATEONLY,
                     allowNull: false,
                 },
-                thumbnail: {
+                url: {
                     type: Sequelize.STRING,
                     allowNull: false,
-                }
+                },
+                document: {
+                    type: Sequelize.STRING,
+                    allowNull: true,
+                },
+                type: {
+                    type: Sequelize.ENUM("NORMATIVACAO", "NORMATIVA", "RESOLUCAO"),
+                    allowNull: false,
+                },
             }, {
                 sequelize,
                 tableName: "information",
-            }
-        );
+            });
+        return this;
     }
 }
