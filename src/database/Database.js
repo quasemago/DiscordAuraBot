@@ -21,7 +21,7 @@ global.db_context = new Sequelize(
     bot_config.DATABASE_USER,
     bot_config.DATABASE_PASSWORD,
     {
-        dialect: 'mysql',
+        dialect: bot_config.DATABASE_DIALECT,
         host: bot_config.DATABASE_HOST,
         port: parseInt(bot_config.DATABASE_PORT),
         timezone: '-04:00',
