@@ -8,7 +8,7 @@ import {
 } from 'discord.js';
 import {createCanvas} from "canvas";
 import {DateTime} from "luxon";
-import {testDbConnection} from "../../../helpers/utils.js";
+import {testDbConnection, formatNumberWithLeadingZero} from "../../../helpers/utils.js";
 import ClassPeriod from "../../../database/models/ClassPeriod.js";
 import ClassSchedule from "../../../database/models/ClassSchedule.js";
 import {Op} from "sequelize";
@@ -183,7 +183,7 @@ export default {
                                         return;
                                     }
 
-                                    const schedulePeriod = `${periodStartOfWeek.getDate()}/${periodStartOfWeek.getMonth() + 1} - ${periodEndOfWeek.getDate()}/${periodEndOfWeek.getMonth() + 1}`;
+                                    const schedulePeriod = `${formatNumberWithLeadingZero(periodStartOfWeek.getDate())}/${formatNumberWithLeadingZero(periodStartOfWeek.getMonth() + 1)} - ${formatNumberWithLeadingZero(periodEndOfWeek.getDate())}/${formatNumberWithLeadingZero(periodEndOfWeek.getMonth() + 1)}`;
                                     const canvasBuffer = createScheduleImage(semesterLessons, schedulePeriod);
                                     let lessonLegend = '';
                                     let lessonTeachers = '';

@@ -85,3 +85,7 @@ export function *getAllFilesFromDir(dir) {
         }
     }
 }
+
+export const formatNumberWithLeadingZero = (number) => {
+    return number.toString().padStart(2, '0');
+}
