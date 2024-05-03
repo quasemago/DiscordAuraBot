@@ -190,7 +190,7 @@ export default {
 
                                     semesterLessons.forEach((lesson) => {
                                         lessonLegend += `**${lesson.code}** - ${lesson.subject}\n`;
-                                        lessonTeachers += `${lesson.teacher}\n`;
+                                        lessonTeachers += `**${lesson.code}** - ${lesson.teacher}\n`;
                                     });
 
                                     await i_semester.update({
