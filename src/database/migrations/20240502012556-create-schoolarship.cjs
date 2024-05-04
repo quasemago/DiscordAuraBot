@@ -32,6 +32,14 @@ module.exports = {
       type: {
         type: Sequelize.ENUM('BOLSA', 'AUXILIO'),
         allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
       }
     });
   },

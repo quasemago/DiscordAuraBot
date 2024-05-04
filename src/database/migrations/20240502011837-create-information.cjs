@@ -30,6 +30,14 @@ module.exports = {
         type: Sequelize.ENUM("NORMATIVACAO", "NORMATIVA", "RESOLUCAO"),
         allowNull: false,
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      }
     });
   },
 
