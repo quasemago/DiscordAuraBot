@@ -14,7 +14,7 @@ export default class FAQ extends Model {
                     allowNull: false,
                 },
                 answer: {
-                    type: Sequelize.STRING,
+                    type: Sequelize.TEXT,
                     allowNull: false,
                 },
                 frequency: {
