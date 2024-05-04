@@ -14,13 +14,11 @@
     "seeders:undo": "npx sequelize-cli db:seed:undo --seeders-path src/database/seeders"
   },
   "dependencies": {
-    "@devraelfreeze/discordjs-pagination": "^2.7.6",
     "canvas": "^2.11.2",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "luxon": "^3.4.4",
     "mysql2": "^3.6.0",
-    "node-fetch": "^3.3.2",
     "sequelize": "^6.32.1",
     "winston": "^3.10.0"
   },
