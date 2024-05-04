@@ -8,8 +8,10 @@
     "stop": "pm2 delete auradiscordbot",
     "start": "pm2 start ./ecosystem.config.cjs",
     "start:bot": "node --no-deprecation --unhandled-rejections=strict index.js",
-    "migrate": "npx sequelize-cli db:migrate --migrations-path src/database/migrations",
-    "migrate:undo": "npx sequelize-cli db:migrate:undo --migrations-path src/database/migrations"
+    "migrations": "npx sequelize-cli db:migrate --migrations-path src/database/migrations",
+    "migrations:undo": "npx sequelize-cli db:migrate:undo --migrations-path src/database/migrations",
+    "seeders": "npx sequelize-cli db:seed:all --seeders-path src/database/seeders",
+    "seeders:undo": "npx sequelize-cli db:seed:undo --seeders-path src/database/seeders"
   },
   "dependencies": {
     "@devraelfreeze/discordjs-pagination": "^2.7.6",
