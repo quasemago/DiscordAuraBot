@@ -15,6 +15,14 @@ export default class GuildServer extends Model {
                     unique: true,
                     allowNull: false,
                 },
+                greeting_channel_id: {
+                    type: Sequelize.BIGINT,
+                    allowNull: true,
+                },
+                greeting_message: {
+                    type: Sequelize.STRING,
+                    allowNull: true,
+                },
             }, {
                 sequelize,
                 tableName: "guild_servers",
