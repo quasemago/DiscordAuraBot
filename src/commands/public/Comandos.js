@@ -1,4 +1,5 @@
 import {EmbedBuilder, SlashCommandBuilder} from 'discord.js';
+import {validateUserPermissions} from "../../helpers/utils.js";
 
 const cmdData = new SlashCommandBuilder()
     .setName('comandos')
@@ -22,13 +23,21 @@ export default {
 
         // Group commands by category.
         const commandsData = {};
-        commandList.forEach((cmd) => {
+        for (const cmd of commandList) {
             const {category} = cmd;
+
             if (!commandsData[category]) {
                 commandsData[category] = [];
             }
-            commandsData[category].push(cmd);
-        });
+
+            // Validate user permissions.
+            await validateUserPermissions(interaction, cmd)
+                .then((value) => {
+                    if (value) {
+                        commandsData[category].push(cmd);
+                    }
+                })
+        }
 
         const embed = new EmbedBuilder()
             .setTitle(`🤖 ${client.user.displayName} - Lista de comandos`)
@@ -42,10 +51,15 @@ export default {
 
         // Add fields for each category.
         Object.keys(commandsData).forEach(category => {
+            if (commandsData[category].length === 0) {
+                return;
+            }
+
             const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
             const value = commandsData[category].map(item => {
                 return `- \`\`/${item.data.name}\`\` - ${item.data.description}`;
             }).join('\n');
+
             embed.addFields({
                 name: categoryName,
                 value: value,
@@ -55,7 +69,7 @@ export default {
 
         await interaction.reply({
             embeds: [embed],
-            ephemeral: false
+            ephemeral: true
         });
     }
 };

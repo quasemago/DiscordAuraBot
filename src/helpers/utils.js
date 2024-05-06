@@ -6,8 +6,9 @@ export const isBotOwner = function (userid) {
     return userid === bot_config.BOT_OWNER;
 }
 
-export const userHasPermission = function (interaction, cmd) {
+export const validateUserPermissions = function (interaction, cmd) {
     return new Promise(async (resolve) => {
+
         let isOwner = isBotOwner(interaction.user.id);
         if (isOwner) {
             resolve(true);
@@ -39,7 +40,7 @@ export const userHasPermission = function (interaction, cmd) {
         }
 
         // Check if the user has the required permission.
-        let result = await interaction.member.permissions.has(cmd.data.default_member_permissions, true);
+        let result = interaction.member.permissions.has(cmd.data.default_member_permissions, true);
         resolve(result);
     });
 }
@@ -75,8 +76,8 @@ export const mathRound = async function (num) {
     return Math.round((num + Number.EPSILON) * 100) / 100
 }
 
-export function *getAllFilesFromDir(dir) {
-    const files = fs.readdirSync(dir, { withFileTypes: true });
+export function* getAllFilesFromDir(dir) {
+    const files = fs.readdirSync(dir, {withFileTypes: true});
     for (const file of files) {
         if (file.isDirectory()) {
             yield* getAllFilesFromDir(path.join(dir, file.name));
