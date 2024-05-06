@@ -69,8 +69,6 @@ export default {
                                     return;
                                 }
 
-                                console.log(faqItem);
-
                                 await i.update({
                                     embeds: [
                                         new EmbedBuilder()
