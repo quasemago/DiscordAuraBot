@@ -14,7 +14,7 @@
     "seeders:undo": "npx sequelize-cli db:seed:undo --seeders-path src/database/seeders"
   },
   "dependencies": {
-    "canvas": "^2.11.2",
+    "@napi-rs/canvas": "^0.1.52",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "luxon": "^3.4.4",

@@ -6,7 +6,7 @@ import {
     StringSelectMenuBuilder,
     StringSelectMenuOptionBuilder
 } from 'discord.js';
-import {createCanvas} from "canvas";
+import {createCanvas} from "@napi-rs/canvas";
 import {DateTime} from "luxon";
 import {testDbConnection, formatNumberWithLeadingZero} from "../../../helpers/utils.js";
 import ClassPeriod from "../../../database/models/ClassPeriod.js";
