@@ -1,5 +1,6 @@
 'use strict';
 
+const Sequelize = require("sequelize");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -13,6 +14,14 @@ module.exports = {
         type: Sequelize.BIGINT,
         unique: true,
         allowNull: false,
+      },
+      greeting_channel_id: {
+        type: Sequelize.BIGINT,
+        allowNull: true,
+      },
+      greeting_message: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         type: Sequelize.DATE,
