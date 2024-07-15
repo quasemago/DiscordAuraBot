@@ -1,6 +1,6 @@
 {
   "name": "AuraDiscordBot",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "Discord chatbot for UNEMAT",
   "type": "module",
   "main": "index.js",
@@ -8,10 +8,10 @@
     "stop": "pm2 delete auradiscordbot",
     "start": "pm2 start ./ecosystem.config.cjs",
     "start:bot": "node --no-deprecation --unhandled-rejections=strict index.js",
-    "migrations": "npx sequelize-cli db:migrate --migrations-path src/database/migrations",
-    "migrations:undo": "npx sequelize-cli db:migrate:undo --migrations-path src/database/migrations",
-    "seeders": "npx sequelize-cli db:seed:all --seeders-path src/database/seeders",
-    "seeders:undo": "npx sequelize-cli db:seed:undo --seeders-path src/database/seeders"
+    "migrations": "npx sequelize-cli db:migrate --migrations-path database/migrations",
+    "migrations:undo": "npx sequelize-cli db:migrate:undo --migrations-path database/migrations",
+    "seeders": "npx sequelize-cli db:seed:all --seeders-path database/seeders",
+    "seeders:undo": "npx sequelize-cli db:seed:undo --seeders-path database/seeders"
   },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.52",
