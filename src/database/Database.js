@@ -21,18 +21,16 @@ global.db_context = new Sequelize(
     bot_config.DATABASE_USER,
     bot_config.DATABASE_PASSWORD,
     {
-        dialect: 'mysql',
+        dialect: bot_config.DATABASE_DIALECT,
         host: bot_config.DATABASE_HOST,
         port: parseInt(bot_config.DATABASE_PORT),
         timezone: '-04:00',
+        logging: process.env.NODE_ENV === 'development' ? console.log : false,
         dialectOptions: {
             charset: 'utf8',
         }
     }
 );
 
-// Start model db connection
 models.forEach((model) => model.init(db_context));
-
-// Check for db associations.
 models.forEach((model) => model.associate && model.associate(db_context.models));

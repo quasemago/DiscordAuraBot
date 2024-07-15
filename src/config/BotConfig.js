@@ -15,7 +15,8 @@ global.bot_config = {
     DATABASE_PORT: '',
     DATABASE_USER: '',
     DATABASE_PASSWORD: '',
-    DATABASE_DB: ''
+    DATABASE_DB: '',
+    DATABASE_DIALECT: ''
 }
 
 // Parse .env file
@@ -31,7 +32,8 @@ let required_fields = [
     'DATABASE_PORT',
     'DATABASE_USER',
     'DATABASE_PASSWORD',
-    'DATABASE_DB'
+    'DATABASE_DB',
+    'DATABASE_DIALECT'
 ];
 
 required_fields.forEach(field => {

@@ -1,4 +1,4 @@
-global.botversion = '0.7.0';
+global.botversion = '1.0.0';
 global.botauthor = 'Bruno "quasemago" Ronning';
 global.authorgithub = 'https://github.com/quasemago';
 
